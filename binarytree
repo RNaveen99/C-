@@ -1,0 +1,104 @@
+#include<iostream>
+#include<stdlib.h>
+using namespace std;
+
+
+
+
+
+struct node{
+    int data;
+    node *left;
+    node *right;
+};
+
+void insertleft(node*,node*);
+void insertright(node*,node*);
+
+   void insertleft(node *newNode,node *trav){
+    if(trav->left!=NULL){
+        trav = trav->left;
+        if((newNode->data)<(trav->data))
+            insertleft(newNode,trav);
+        else
+            insertright(newNode,trav);
+    }
+    else{
+        trav->left = newNode;
+        }
+}
+
+void insertright(node *newNode,node *trav){
+   if(trav->right!=NULL){
+        trav = trav->right;
+        if((newNode->data)<(trav->data))
+            insertleft(newNode,trav);
+        else
+            insertright(newNode,trav);
+    }
+    else{
+        trav->right = newNode;
+        }
+}
+void inorder(node *h)
+{
+
+	if(h!=NULL)
+	{
+		inorder(h->left);
+
+		cout<<int(h->data)<<" ";
+
+		inorder(h->right);
+	}
+}
+int main(){
+    int n;
+    cout<<"Enter the number of nodes to store in binary tree";
+    cin>>n;
+
+    int arr[n];
+    for(int i=0; i<n; i++){
+        cout<<"Enter the data for Node "<<i+1<<" :";
+        cin>>arr[i];
+
+        cout<<endl;
+
+    }
+
+
+
+    node *root = ((node*)malloc(sizeof(node)));
+    root->data = arr[0];
+    root->left = NULL;
+    root->right = NULL;
+    node *trav = root;
+
+
+
+    for(int i=1; i<n; i++){
+        node *newNode = ((node*)malloc(sizeof(node)));
+        newNode->data = int(arr[i]);
+        cout<<arr[i]<<endl;
+        cout<<newNode->data<<endl;
+        newNode->left = NULL;
+        newNode->right = NULL;
+
+        if((newNode->data)<(root->data)){
+            insertleft(newNode,root);
+        }
+        else
+            insertright(newNode,root);
+
+    }
+
+
+    node *s;
+	s=trav;
+	cout<<"Inorder of the entered binary tree is ";
+	inorder(s);
+
+
+
+
+}
